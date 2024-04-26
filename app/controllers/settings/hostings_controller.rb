@@ -19,8 +19,15 @@ class Settings::HostingsController < ApplicationController
       hosting_params.keys.each do |key|
         Setting.send("#{key}=", hosting_params[key].strip)
       end
+      if (user = User.find_by(email: Current.user.email))
+        SettingsMailer.with(
+          user: user,
+        ).send_test_email.deliver_later
+      end
 
-      redirect_to settings_hosting_path, notice: t(".success")
+      render :show, notice: t("settings.hostings.show.smtp_settings.test_email_sent")
+
+      # redirect_to settings_hosting_path, notice: t(".success")
     else
       flash.now[:error] = @errors.first.message
       render :show, status: :unprocessable_entity
