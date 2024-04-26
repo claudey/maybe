@@ -4,6 +4,16 @@ class Settings::HostingsController < ApplicationController
   def show
   end
 
+  def send_self_host_test_email
+    if (user = User.find_by(email: Current.user.email))
+      SettingsMailer.with(
+        user: user,
+      ).send_test_email.deliver_later
+    end
+
+    redirect_to show, notice: t("settings.hostings.show.smtp_settings.test_email_sent")
+  end
+
   def update
     if all_updates_valid?
       hosting_params.keys.each do |key|
