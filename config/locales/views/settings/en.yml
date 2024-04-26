@@ -27,6 +27,7 @@ en:
           title: SMTP Email Configuration (coming soon...)
           username: Username
           username_placeholder: username@gmail.com
+          test_email_sent: Test email has been sent
         upgrades:
           description: Choose how your application receives updates
           latest_commit:
