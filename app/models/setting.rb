@@ -7,6 +7,22 @@ class Setting < RailsSettings::Base
         default: ENV["RENDER_DEPLOY_HOOK"],
         validates: { allow_blank: true, format: { with: /\Ahttps:\/\/api\.render\.com\/deploy\/srv-.+\z/ } }
 
+
+  field :smtp_domain, type: :string,
+      default: ENV["APP_DOMAIN"]
+
+  field :smtp_host, type: :string,
+      default: ENV["SMTP_ADDRESS"]
+
+  field :smtp_port, type: :integer,
+      default: ENV["SMTP_PORT"]
+
+  field :smtp_username, type: :string,
+      default: ENV["SMTP_USERNAME"]
+
+  field :smtp_password, type: :string,
+      default: ENV["SMTP_PASSWORD"]
+
   field :upgrades_mode,
         type: :string,
         default: ENV.fetch("UPGRADES_MODE", "manual"),
